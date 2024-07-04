@@ -179,7 +179,6 @@ def connect_and_type(x, y, message):
             print(f'An error occurred: {e}')
 
 def main():
-    start_adb_server()
     #stop_adb_server() # This is for testing, to see how the script can handle the errors and restart the server.
     connect_and_type(500, 120, "Quack")
 
