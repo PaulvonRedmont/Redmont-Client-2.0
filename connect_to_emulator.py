@@ -1,7 +1,7 @@
 from ppadb.client import Client as AdbClient
 import os, time
 
-adb_path = r"C:\Users\paule\Downloads\platform-tools-latest-windows\platform-tools\adb.exe"
+adb_path = r"path to adb.exe"
 bluestacks_ip = 'localhost'
 bluestacks_port = 5555
 
