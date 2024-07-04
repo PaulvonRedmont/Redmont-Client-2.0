@@ -3,10 +3,6 @@ from ppadb.client import Client as AdbClient
 #from Connect_to_emulator import start_connect_to_and_kill_server
 import os, time
 
-
-from ppadb.client import Client as AdbClient
-import os, time
-
 adb_path = r"C:\Users\paule\Downloads\platform-tools-latest-windows\platform-tools\adb.exe"
 bluestacks_ip = 'localhost'
 bluestacks_port = 5555
@@ -19,8 +15,6 @@ total_time_for_total_operation = 0
 time_to_start_server = 0
 time_to_connect_to_server = 0
 time_to_kill_server = 0
-
-
 
 def start_adb_server():
     global time_to_start_server
@@ -113,8 +107,6 @@ def ONLY_start_and_connect_to_server():
 
 #start_connect_to_and_kill_server()
 
-
-
 def stop_adb_server():
     global time_to_kill_server 
     start_time = time.time()
@@ -123,7 +115,6 @@ def stop_adb_server():
     total_time_to_kill_server = end_time - start_time
     time_to_kill_server = total_time_to_kill_server
     print(f"Server killed in {time_to_kill_server} seconds")
-
 
 def connect_and_screenshot():
     global time_to_initialize_ADB_client, time_to_screenshot, time_to_copy_screenshot
@@ -174,7 +165,6 @@ def connect_and_screenshot():
         print(f"It took {time_to_screenshot} seconds to take a screenshot of emulator")
         print(f"It took {time_to_copy_screenshot} seconds to copy screenshot to local machine and delete it from emulator")
 
-#some error handling stuff
     except Exception as e:
         print(f'An error occurred: {e}')
         error_message = str(e)
@@ -186,6 +176,7 @@ def connect_and_screenshot():
             connect_and_screenshot()
         else:
             print(f'An error occurred: {e}')
+
 
 def main():
     stop_adb_server()
