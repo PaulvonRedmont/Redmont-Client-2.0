@@ -1,8 +1,13 @@
 from ppadb.client import Client as AdbClient
-import os, time
+from PIL import Image
+import os, time, pytesseract
+from spellchecker import SpellChecker
 
 message_to_write = ''
 latest_screenshot = ''
+
+tesseract_path = r'C:\Users\paule\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
+pytesseract.pytesseract.tesseract_cmd = tesseract_path
 
 adb_path = r"C:\Users\paule\Downloads\platform-tools-latest-windows\platform-tools\adb.exe"
 bluestacks_ip = 'localhost'
@@ -87,6 +92,22 @@ def ONLY_start_and_connect_to_server():
         time_to_connect_to_server = 0
         time_to_kill_server = 0
 
+def resize_image(file_path, target_size):
+    global latest_screenshot
+    image = Image.open(file_path)
+    resized_image = image.resize(target_size, Image.BICUBIC)
+    return resized_image
+
+def OCR_screenshot(file_path):
+    global latest_screenshot
+    resized_image = resize_image(file_path, (9000, 6000))  # Resize the image to 9000x6000 pixels
+    begin_time = time.time()
+    text = pytesseract.image_to_string(resized_image, lang='deu')
+    end_time = time.time()
+    total_time = end_time - begin_time
+    print(f"OCR result: {text}")
+    print("OCR Completed in {:.5f} seconds".format(total_time))
+
 def connect_and_screenshot():
     global time_to_initialize_ADB_client, time_to_screenshot, time_to_copy_screenshot, latest_screenshot
     try:
@@ -105,6 +126,8 @@ def connect_and_screenshot():
         remote_screenshot_path = '/sdcard/screenshot.png'
         folder_path = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\Screenshots for OCR"
         local_screenshot_path = os.path.join(folder_path, f'local_screenshot{timestamp}.png')
+        latest_screenshot = local_screenshot_path
+        print(f"Latest screenshot: {latest_screenshot}")
         device.shell(f'screencap -p {remote_screenshot_path}')
         end_time = time.time()
         time_to_screenshot = end_time - start_time
@@ -184,10 +207,14 @@ def connect_and_type(x, y, message):
 
 
 
+
+
+
+
 def main():
     #stop_adb_server() # This is for testing, to see how the script can handle the errors and restart the server.
     #connect_and_type(500, 120, "Quack")
-    #connect_and_screenshot()
-    pass
+    connect_and_screenshot()
+    OCR_screenshot(latest_screenshot)
 
 main()
