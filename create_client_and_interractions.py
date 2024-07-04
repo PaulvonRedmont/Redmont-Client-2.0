@@ -175,9 +175,37 @@ def connect_and_screenshot():
         else:
             print(f'An error occurred: {e}')
 
+def connect_and_tap(x,y):
+    global time_to_initialize_ADB_client
+    try:
+        client = AdbClient(host='127.0.0.1', port=5037)
+        client.remote_connect(bluestacks_ip, bluestacks_port)
+        devices = client.devices()
+        if not devices:
+            raise Exception('No devices/emulators found.')
+        device = devices[0]
+        device.shell(f'input tap {x} {y}')
+        print(f"Tapped at {x} {y}")
+    except Exception as e:
+        print(f'An error occurred: {e}')
+        error_message = str(e)
+        error_code = error_message.split("[")[1].split("]")[0]
+        if error_code == "WinError 10061":
+            print("Trying to resolve error...")
+            stop_adb_server()
+            ONLY_start_and_connect_to_server()
+            connect_and_tap(x,y)
+        else:
+            print(f'An error occurred: {e}')
+
+
+    
+
 
 def main():
     #stop_adb_server() #this is for testing, to see how the script can handle the errors and restart the server.
-    connect_and_screenshot()
+    #connect_and_screenshot()
+    stop_adb_server()
+    connect_and_tap(300, 300)
 
 main()
