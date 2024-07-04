@@ -3,7 +3,7 @@ from Connect_to_emulator import ONLY_start_and_connect_to_server
 #from Connect_to_emulator import start_connect_to_and_kill_server
 import os, time
 
-adb_path = r"path to adb.exe"
+adb_path = r"C:\Users\paule\Downloads\platform-tools-latest-windows\platform-tools\adb.exe"
 bluestacks_ip = 'localhost'
 bluestacks_port = 5555
 
@@ -17,7 +17,7 @@ def stop_adb_server():
     start_time = time.time()
     os.system(f'{adb_path} kill-server')
     end_time = time.time()
-    total_time_to_kill_server = start_time - end_time
+    total_time_to_kill_server = end_time - start_time
     time_to_kill_server = total_time_to_kill_server
     print(f"Server killed in {time_to_kill_server} seconds")
 
@@ -35,7 +35,7 @@ def connect_and_screenshot():
         # Handle multiple devices if needed
         device = devices[0]
         end_time = time.time()
-        total_time_to_start_client = start_time - end_time
+        total_time_to_start_client = end_time - start_time
         time_to_initialize_ADB_client = total_time_to_start_client
         start_time = 0
         end_time = 0
@@ -49,7 +49,7 @@ def connect_and_screenshot():
         device.shell(f'screencap -p {remote_screenshot_path}')
         print(f'Screenshot saved to {remote_screenshot_path} on the device.')
         end_time = time.time()
-        total_time_to_screenshot = start_time - end_time
+        total_time_to_screenshot = end_time - start_time
         time_to_screenshot = total_time_to_screenshot
         start_time = 0
         end_time = 0
@@ -62,7 +62,7 @@ def connect_and_screenshot():
         device.shell(f'rm {remote_screenshot_path}')
         print(f'Screenshot deleted from the device.')
         end_time = time.time()
-        total_time_to_copy_screenshot = start_time - end_time
+        total_time_to_copy_screenshot = end_time - start_time
         time_to_copy_screenshot = total_time_to_copy_screenshot
         start_time = 0
         end_time = 0
