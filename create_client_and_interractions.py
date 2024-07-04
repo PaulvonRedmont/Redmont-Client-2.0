@@ -162,6 +162,7 @@ def connect_and_type(x, y, message):
         device.shell(f'input text "{message}"')
         print(f"Successfully entered {message}")
         time.sleep(1)
+        device.shell('input keyevent 66')
         print("Successfully pressed ENTER and hopefully sent the message")
     except Exception as e:
         print(f'An error occurred: {e}')
@@ -175,7 +176,7 @@ def connect_and_type(x, y, message):
             print(f'An error occurred: {e}')
 
 def main():
-    stop_adb_server() # This is for testing, to see how the script can handle the errors and restart the server.
+    #stop_adb_server() # This is for testing, to see how the script can handle the errors and restart the server.
     connect_and_type(500, 120, "Quack")
 
 main()
