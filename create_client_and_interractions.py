@@ -88,6 +88,7 @@ def ONLY_start_and_connect_to_server():
 def connect_and_screenshot():
     global time_to_initialize_ADB_client, time_to_screenshot, time_to_copy_screenshot
     try:
+        start_adb_server()
         start_time = time.time()
         client = AdbClient(host='127.0.0.1', port=5037)
         devices = client.devices()
@@ -129,6 +130,7 @@ def connect_and_screenshot():
 
 def connect_and_tap(x, y):
     try:
+        start_adb_server()
         client = AdbClient(host='127.0.0.1', port=5037)
         client.remote_connect(bluestacks_ip, bluestacks_port)
         devices = client.devices()
@@ -150,6 +152,7 @@ def connect_and_tap(x, y):
 
 def connect_and_type(x, y, message):
     try:
+        start_adb_server()
         client = AdbClient(host='127.0.0.1', port=5037)
         client.remote_connect(bluestacks_ip, bluestacks_port)
         devices = client.devices()
@@ -176,6 +179,7 @@ def connect_and_type(x, y, message):
             print(f'An error occurred: {e}')
 
 def main():
+    start_adb_server()
     #stop_adb_server() # This is for testing, to see how the script can handle the errors and restart the server.
     connect_and_type(500, 120, "Quack")
 
