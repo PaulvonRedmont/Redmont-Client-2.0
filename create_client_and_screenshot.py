@@ -1,7 +1,6 @@
 from ppadb.client import Client as AdbClient
-#from Connect_to_emulator import ONLY_start_and_connect_to_server
-#from Connect_to_emulator import start_connect_to_and_kill_server
 import os, time
+
 
 adb_path = r"C:\Users\paule\Downloads\platform-tools-latest-windows\platform-tools\adb.exe"
 bluestacks_ip = 'localhost'
