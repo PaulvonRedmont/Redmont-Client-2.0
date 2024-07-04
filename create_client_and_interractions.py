@@ -2,6 +2,7 @@ from ppadb.client import Client as AdbClient
 import os, time
 
 message_to_write = ''
+latest_screenshot = ''
 
 adb_path = r"C:\Users\paule\Downloads\platform-tools-latest-windows\platform-tools\adb.exe"
 bluestacks_ip = 'localhost'
@@ -87,7 +88,7 @@ def ONLY_start_and_connect_to_server():
         time_to_kill_server = 0
 
 def connect_and_screenshot():
-    global time_to_initialize_ADB_client, time_to_screenshot, time_to_copy_screenshot
+    global time_to_initialize_ADB_client, time_to_screenshot, time_to_copy_screenshot, latest_screenshot
     try:
         start_adb_server()
         start_time = time.time()
@@ -102,7 +103,8 @@ def connect_and_screenshot():
         start_time = time.time()
         timestamp = time.time()
         remote_screenshot_path = '/sdcard/screenshot.png'
-        local_screenshot_path = f'local_screenshot{timestamp}.png'
+        folder_path = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\Screenshots for OCR"
+        local_screenshot_path = os.path.join(folder_path, f'local_screenshot{timestamp}.png')
         device.shell(f'screencap -p {remote_screenshot_path}')
         end_time = time.time()
         time_to_screenshot = end_time - start_time
@@ -184,6 +186,8 @@ def connect_and_type(x, y, message):
 
 def main():
     #stop_adb_server() # This is for testing, to see how the script can handle the errors and restart the server.
-    connect_and_type(500, 120, "Quack")
+    #connect_and_type(500, 120, "Quack")
+    #connect_and_screenshot()
+    pass
 
 main()
