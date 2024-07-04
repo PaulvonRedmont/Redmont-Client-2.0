@@ -18,6 +18,7 @@ time_to_kill_server = 0
 
 def start_adb_server():
     global time_to_start_server
+    os.system('cls' if os.name == 'nt' else 'clear')
     start_time = time.time()
     os.system(f'{adb_path} start-server')
     time.sleep(2)  # Wait for the server to start
@@ -151,6 +152,7 @@ def connect_and_tap(x, y):
             print(f'An error occurred: {e}')
 
 def connect_and_type(x, y, message):
+
     try:
         start_adb_server()
         client = AdbClient(host='127.0.0.1', port=5037)
@@ -177,6 +179,8 @@ def connect_and_type(x, y, message):
             connect_and_type(x, y, message)
         else:
             print(f'An error occurred: {e}')
+
+
 
 def main():
     #stop_adb_server() # This is for testing, to see how the script can handle the errors and restart the server.
