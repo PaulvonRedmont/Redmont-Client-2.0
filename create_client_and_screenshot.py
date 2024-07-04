@@ -1,7 +1,6 @@
 from ppadb.client import Client as AdbClient
 import os, time
 
-
 adb_path = r"C:\Users\paule\Downloads\platform-tools-latest-windows\platform-tools\adb.exe"
 bluestacks_ip = 'localhost'
 bluestacks_port = 5555
@@ -178,7 +177,7 @@ def connect_and_screenshot():
 
 
 def main():
-    stop_adb_server()
+    #stop_adb_server() #this is for testing, to see how the script can handle the errors and restart the server.
     connect_and_screenshot()
 
 main()
