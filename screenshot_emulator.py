@@ -42,8 +42,9 @@ def connect_and_screenshot():
         
         start_time = time.time()
         # Specify paths
+        timestamp = time.time()
         remote_screenshot_path = '/sdcard/screenshot.png'
-        local_screenshot_path = 'local_screenshot.png'
+        local_screenshot_path = f'local_screenshot{timestamp}.png'
         # Capture screenshot on the BlueStacks device
         device.shell(f'screencap -p {remote_screenshot_path}')
         print(f'Screenshot saved to {remote_screenshot_path} on the device.')
