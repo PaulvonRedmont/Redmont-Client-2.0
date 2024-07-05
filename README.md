@@ -16,3 +16,4 @@ _Some notable changes:_
 5) Get the file path for the tesseract.exe file from the extracted folder and add it to the script under the `tesseract_path` variable
 6) pip install `pytesseract, pure-python-adb, pyspellchecker`
 7) Enable ADB on Bluestacks under Settings < Advanced and restart Bluestacks
+8) Run the script/executable (which I will include a download link to once I write up the logic, ML component and GUI)
