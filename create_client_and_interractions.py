@@ -102,7 +102,7 @@ def OCR_screenshot(file_path):
     global latest_screenshot
     resized_image = resize_image(file_path, (9000, 6000))  # Resize the image to 9000x6000 pixels
     begin_time = time.time()
-    text = pytesseract.image_to_string(resized_image, lang='deu')
+    text = pytesseract.image_to_string(resized_image, lang='eng')
     end_time = time.time()
     total_time = end_time - begin_time
     print(f"OCR result: {text}")
