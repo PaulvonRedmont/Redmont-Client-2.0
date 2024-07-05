@@ -1,6 +1,6 @@
 # Redmont-Client-2.0
 
-New and updated version of Redmont Client 1.0 (latest version using ADB Client and increased accuracy)
+New and updated version of Redmont Client 1.0 (latest version using ADB Client and increased accuracy, as described [here](https://github.com/PaulvonRedmont/Redmont-Client-2.0/blob/main/progress%20logs.md#attempt-10-7324-going-back-to-bluestacks-with-adb-client-and-increased-ocr-accuracy))
 
 _Some notable changes:_
 - Now uses ppadb and ADB clients to interact with Bluestacks emulator
