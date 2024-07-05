@@ -3,9 +3,9 @@
 New and updated version of Redmont Client 1.0.
 
 _Some notable changes:_
-- Now uses ppadb and ADB to interract with Bluestacks
+- Now uses ppadb and ADB to interact with Bluestacks
 - Now allows users to retain full functionality of their keyboard and mouse while the client is running (older versions used pyautogui as a sort of macro)
-- Has an increased OCR accuracy rate (benchmarking coming soon) by increasing image size when processing image
+- Has an 17% increased OCR accuracy rate by increasing image size when processing image
 
 # How to install:
 
