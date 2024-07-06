@@ -6,7 +6,7 @@ def calculate_spelling_score(string):
 
 string1 = """out.Dr P redacted receives 25 honor points,
 and 50 experience.Climbing 5850 spots
-
+ 
 in the rookie standings D, your knight Dr
 
 P redacted currently occupies the 3805th
