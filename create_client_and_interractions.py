@@ -2,7 +2,7 @@ from ppadb.client import Client as AdbClient
 from PIL import Image
 import os, time, pytesseract
 from spellchecker import SpellChecker
-
+ 
 message_to_write = ''
 latest_screenshot = ''
 
