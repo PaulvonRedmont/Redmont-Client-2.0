@@ -2,7 +2,7 @@
 
 **Result: Failure.** 
 
-**Reason:** Alexa stops responding to all commands, both verbal and physical after approximately 100 inputs, both verbal and physical. To fix this, one must restart the device, by unplugging and replugging the Echo Dot.
+**Reason:** Alexa stops responding to all commands, both verbal and physical after approximately 100 inputs (both verbal and physical). To fix this, one must restart the device, by unplugging and replugging the Echo Dot, which would be a serious technical challenge of timing and manufactured dexterity.
 
 ## Attempt #2: Tried using a robotics kit to type in commands in the Alexa App on an iPhone.
 
@@ -10,35 +10,35 @@
 
 **Reason:** Alexa has varied response times, and this “macro” had no way of knowing what the heck Alexa was saying.
 
-## Attempt #3: Tries using a robotics kit to type in commands in the Alexa App on an iPhone, as well as using OCR (Optical Character Recognition) to try and detect the words on the phone.
+## Attempt #3: Tries using a robotics kit to type in commands in the Alexa App on an iPhone, as well as using a live webcam and OCR (Optical Character Recognition) to try and detect the words on the phone.
 
 **Result: Failure.**
 
-**Reason:** OCR apparently does not entirely work for images that glow (namely, an iPhone. Furthermore, this method would require a user to keep their phone on for massive amounts of time, and not be able to use it while the macro was running.
+**Reason:** OCR apparently does not entirely work all that well for images that glow (namely, an iPhone). Furthermore, this method would require a user to keep their phone on for massive amounts of time, and not be able to use it while the macro was running. And if we're literally having to build all these custom scripts for increased image sharpness and quality for OCR, we might as well try and bot it on the software side.
 
 ## Attempt #4: Tried using a mobile app to bot the Alexa app on an iPhone.
 
 **Result: Failure.**
 
-**Reason:** This method would require a user to keep their phone on for massive amounts of time, and not be able to use it while the macro was running. Also, mobile development is a P A I N.
+**Reason:** This method would require a user to keep their phone on for massive amounts of time, and not be able to use it while the macro was running. Also, mobile development is a P A I N, and I'm not anxious to get into it.
 
 ## Attempt #5: Tried using MacOS’s iPhone simulator, which would allow me to create a macro using Python or Pyautogui to bot the Alexa App via a PC.
 
 **Result: Failure.**
 
-**Reason:** 1) using a Virtual Box to run the MacOS iPhone Simulator is potentially illegal and 2) rather difficult.
+**Reason:** 1) using a Virtual Box to run the MacOS iPhone Simulator is potentially illegal and 2) rather difficult, as you have to convert the macos operating system into an image that VB can run.
 
 ## Attempt #6: Tried using the BlueStacks software to use the mobile version of the Alexa App on the PC.
 
 **Result: Failure.**
 
-**Reason:** 1) BlueStacks refused to properly run the Alexa App, and 2) BlueStacks is probably a virus, and even if it isn’t, it’s one VERY poorly designed program.
+**Reason:** 1) BlueStacks refused to properly run the Alexa App, and 2) BlueStacks is probably a virus, and even if it isn’t, it’s one VERY poorly designed and buggy program.
 
-## Attempt #7: Tried to use Wireshark or some other packet sniffer to see if I could spoof the Alexa API.
+## Attempt #7: Tried to use Wireshark or some other packet sniffer to see if I could spoof the authentication tokens of my Echo Dot.
 
 **Result: Failure.**
 
-**Reason:** 1) it might have been illegal, 2) it was very hard to spoof the authentication tokens and 3) it took forever.
+**Reason:** Ok, so this attempt was actually a lot harder than I initially thought. First of all, it turns out that trying to hack your own devices is actually a lot harder than it sounds, even when you literally have full knowledge of the network password, your Amazon login, etc. Second, Amazon basically has airtight encryption and authentication, so I doubt even a cybersecurity professional (which I am most certainly not)  could bypass these safeguards. However, I do think there is a lot to be said for this method, despite its insane difficulty. If I had been able to get this thing to work, I could have botted the Alexa app with a lot more ease than other methods...
 
 ## Attempt #8: Tried to use Virtual Audio Cables and the PC Alexa App to bot it using audio recordings and the pocketsphinx library.
 
@@ -54,7 +54,7 @@
 
 **Addendum:** As of 3/1/23, the Alexa App for the PC is no longer available. Other routes must be evaluated and reconsidered. 
 
-UPDATE (3/16/24): Switched focus to OCR and BlueStacks (which I was able to get working). OCR and basic text searching produces unsatisfactory results. Researching how AI could help isolate text of interest
+UPDATE (3/16/24): Switched focus back to OCR and BlueStacks (which I was able to get working). OCR and basic text searching produces unsatisfactory results. Researching how AI could help isolate text of interest. Perhaps a simple text sorting and parsing algorithm could also do the trick.
 
 ## Attempt #10 (7/3/24): Going back to Bluestacks with ADB client and increased OCR accuracy.
 
