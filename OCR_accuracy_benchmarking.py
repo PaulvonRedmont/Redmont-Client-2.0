@@ -4,6 +4,7 @@ def calculate_spelling_score(string):
     score = difflib.SequenceMatcher(None, string.lower(), string).ratio()
     return score
 
+
 string1 = """out.Dr P redacted receives 25 honor points,
 and 50 experience.Climbing 5850 spots
  
