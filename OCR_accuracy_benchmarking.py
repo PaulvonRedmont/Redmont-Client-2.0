@@ -1,5 +1,5 @@
 import difflib
-
+ 
 def calculate_spelling_score(string):
     score = difflib.SequenceMatcher(None, string.lower(), string).ratio()
     return score
