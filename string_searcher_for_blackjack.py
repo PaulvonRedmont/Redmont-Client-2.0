@@ -1,5 +1,9 @@
 import re
 
+string_to_use = ''
+# String below for testing
+# string_to_use = "The first card is for me. 4 of hearts. 8 of Spades. Now two cards for you. Your first two cards are. 2 of hearts, and Ace of diamonds. That's 13 points. Do you want another card?"
+
 card_points = {
     "Ace of Spades": 1,
     "2 of Spades": 2,
@@ -55,8 +59,6 @@ card_points = {
     "jack of Clubs": 10,
 }
 
-
-
 def process_string(string):
     # Convert to lower case
     string = string.lower()
@@ -80,9 +82,6 @@ def search_phrases(dictionary, string):
     print(f"Phrases found:{found_phrases}")
     print(f"Found numeric values:{numeric_values}")
     return found_phrases, numeric_values
-
-string_to_use = "The first card is for me. 4 of hearts. 8 of Spades. Now two cards for you. Your first two cards are. 2 of hearts, and Ace of diamonds. That's 13 points. Do you want another card?"
-
 
 def process_find_and_sort(input_text):
     print(input_text)
