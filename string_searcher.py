@@ -55,25 +55,7 @@ card_points = {
     "jack of Clubs": 10,
 }
 
-def search_string(search_for, in_string):
-    # Remove spaces and convert to lower case
-    search_for = re.sub(r'\s+', '', search_for).lower()
-    in_string = re.sub(r'\s+', '', in_string).lower()
 
-    # Search for the string
-    if search_for in in_string:
-        return True
-    else:
-        return False
-
-def find_numbers_in_string(s):
-    return re.findall(r'\b\d+\b', s)
-
-numbers = find_numbers_in_string("Hello 123 world 456")
-numbers = [int(num) for num in numbers]
-
-def find_pattern(s):
-    return re.findall(r'The first card is for me.*', s)
 
 def process_string(string):
     # Convert to lower case
@@ -100,10 +82,12 @@ def search_phrases(dictionary, string):
     return found_phrases, numeric_values
 
 string_to_use = "The first card is for me. 4 of hearts. 8 of Spades. Now two cards for you. Your first two cards are. 2 of hearts, and Ace of diamonds. That's 13 points. Do you want another card?"
-string_to_use = process_string(string_to_use)
 
-#find_numbers_in_string("Hello 123 world 456")
 
-#print(find_pattern(""))  # Returns ['abcXYZ', 'abc123']
+def process_find_and_sort(input_text):
+    print(input_text)
+    input_text = process_string(input_text)
+    print(f"Cleaned text: {input_text}")
+    search_phrases(card_points, input_text)
 
-print(search_phrases(card_points, string_to_use))
+process_find_and_sort(string_to_use)
