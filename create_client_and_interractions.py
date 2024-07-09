@@ -97,22 +97,18 @@ def ONLY_start_and_connect_to_server():
 
 
 
+
 def find_and_crop_bubbles(target_image_path, output_folder):
-    # Load the target image
     global wee_little_boxes_file_paths, latest_screenshot
+    # Load the target image
     target_image = cv2.imread(target_image_path)
     if target_image is None:
         raise ValueError("Could not load the image. Please check the image path.")
-    # Convert the image to grayscale
-    gray_image = cv2.cvtColor(target_image, cv2.COLOR_BGR2GRAY)
-    # Apply GaussianBlur to reduce noise and improve edge detection
-    blurred_image = cv2.GaussianBlur(gray_image, (5, 5), 0)
-    # Apply Canny edge detection
-    edges = cv2.Canny(blurred_image, 50, 150)
-    # Find contours in the edge-detected image
-    contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    # Sort the contours based on the largest y-value to the smallest y-value
-    contours = sorted(contours, key=lambda cnt: cv2.boundingRect(cnt)[1])
+    gray_image = cv2.cvtColor(target_image, cv2.COLOR_BGR2GRAY) # Convert the image to grayscale
+    blurred_image = cv2.GaussianBlur(gray_image, (5, 5), 0) # Apply GaussianBlur to reduce noise and improve edge detection
+    edges = cv2.Canny(blurred_image, 50, 150) # Apply Canny edge detection
+    contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Find contours in the edge-detected image
+    contours = sorted(contours, key=lambda cnt: cv2.boundingRect(cnt)[1]) # Sort the contours based on the largest y-value to the smallest y-value
     # Ensure the output folder exists
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
@@ -150,15 +146,11 @@ def crop_below_line(image_path, output_folder):
     y_crop = 1177
     # Crop the image
     cropped_image = image[0:y_crop, :]
-    # Generate a timestamp
-    timestamp = time.strftime("%Y%m%d%H%M%S")
-    # Construct the output filename with the timestamp
-    output_filename = f"cropped_{timestamp}.png"
-    # Determine the output path by joining the output folder and filename
-    output_path = os.path.join(output_folder, output_filename)
-    # Save or display the cropped image
-    cv2.imwrite(output_path, cropped_image)
-    print(f"Cropped image saved to: {output_path}")
+    # Save the cropped image, overwriting the latest_screenshot
+    cv2.imwrite(image_path, cropped_image)
+    latest_screenshot = image_path
+    print(f"Cropped image saved to: {image_path}")
+
 
 def resize_image(file_path, target_size):
     global latest_screenshot
