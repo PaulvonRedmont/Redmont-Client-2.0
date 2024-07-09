@@ -30,7 +30,9 @@ time_to_kill_server = 0
 
 def append_text_to_file(filename, text):
     with open(filename, 'a') as file:
+        timestamp = time.time()
         file.write(text + '\n')
+        file.write(f"Message from Alexa written to file at {timestamp}" + '\n')
 
 def start_adb_server():
     global time_to_start_server
