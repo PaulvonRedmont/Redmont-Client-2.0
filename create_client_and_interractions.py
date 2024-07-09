@@ -128,9 +128,10 @@ def find_and_crop_bubbles(target_image_path, output_folder):
             continue
         # Crop the box from the image
         cropped_box = target_image[y:y+h, x:x+w]
+        timestamp = time.time()
         # Save the cropped box with a labeled filename
         label = messages[count % len(messages)]  # Select the appropriate label based on count
-        output_filename = f'cropped_box_{label}.png'
+        output_filename = f'cropped_box_{timestamp}_{label}.png'
         output_path = os.path.join(output_folder, output_filename)
         cv2.imwrite(output_path, cropped_box)
         
