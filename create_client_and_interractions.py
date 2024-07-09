@@ -134,7 +134,8 @@ def find_and_crop_bubbles(target_image_path, output_folder):
         output_filename = f'cropped_box_{timestamp}_{label}.png'
         output_path = os.path.join(output_folder, output_filename)
         cv2.imwrite(output_path, cropped_box)
-        
+        wee_little_boxes_file_paths.append(output_path)
+
         count += 1
 
 def crop_below_line(image_path, output_folder):
