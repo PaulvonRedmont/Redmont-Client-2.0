@@ -98,20 +98,41 @@ def ONLY_start_and_connect_to_server():
 
 
 
+
 def find_and_crop_bubbles(target_image_path, output_folder):
     global wee_little_boxes_file_paths, latest_screenshot
+    # Start the timer
+    start_time = time.time()
     # Load the target image
     target_image = cv2.imread(target_image_path)
     if target_image is None:
         raise ValueError("Could not load the image. Please check the image path.")
-    gray_image = cv2.cvtColor(target_image, cv2.COLOR_BGR2GRAY) # Convert the image to grayscale
-    blurred_image = cv2.GaussianBlur(gray_image, (5, 5), 0) # Apply GaussianBlur to reduce noise and improve edge detection
-    edges = cv2.Canny(blurred_image, 50, 150) # Apply Canny edge detection
-    contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # Find contours in the edge-detected image
-    contours = sorted(contours, key=lambda cnt: cv2.boundingRect(cnt)[1]) # Sort the contours based on the largest y-value to the smallest y-value
+    print(f"Time taken to load the image: {time.time() - start_time} seconds")
+    # Convert the image to grayscale
+    start_time = time.time()
+    gray_image = cv2.cvtColor(target_image, cv2.COLOR_BGR2GRAY)
+    print(f"Time taken to convert the image to grayscale: {time.time() - start_time} seconds")
+    # Apply GaussianBlur to reduce noise and improve edge detection
+    start_time = time.time()
+    blurred_image = cv2.GaussianBlur(gray_image, (5, 5), 0)
+    print(f"Time taken to apply GaussianBlur: {time.time() - start_time} seconds")
+    # Apply Canny edge detection
+    start_time = time.time()
+    edges = cv2.Canny(blurred_image, 50, 150)
+    print(f"Time taken to apply Canny edge detection: {time.time() - start_time} seconds")
+    # Find contours in the edge-detected image
+    start_time = time.time()
+    contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    print(f"Time taken to find contours: {time.time() - start_time} seconds")
+    # Sort the contours based on the largest y-value to the smallest y-value
+    start_time = time.time()
+    contours = sorted(contours, key=lambda cnt: cv2.boundingRect(cnt)[1])
+    print(f"Time taken to sort contours: {time.time() - start_time} seconds")
     # Ensure the output folder exists
+    start_time = time.time()
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
+    print(f"Time taken to check and create output folder: {time.time() - start_time} seconds")
     count = 0
     messages = ["latest message", "second message", "third message", "fourth message", "fifth message",
                 "sixth message", "seventh message", "eighth message", "ninth message", "tenth message"]
@@ -123,20 +144,24 @@ def find_and_crop_bubbles(target_image_path, output_folder):
         if w < 50 or h < 50:
             continue
         # Crop the box from the image
+        start_time = time.time()
         cropped_box = target_image[y:y+h, x:x+w]
-        timestamp = time.time()
+        print(f"Time taken to crop the box from the image: {time.time() - start_time} seconds")
         # Save the cropped box with a labeled filename
+        start_time = time.time()
         label = messages[count % len(messages)]  # Select the appropriate label based on count
-        output_filename = f'cropped_box_{timestamp}_{label}.png'
+        output_filename = f'cropped_box_{time.time()}_{label}.png'
         output_path = os.path.join(output_folder, output_filename)
         cv2.imwrite(output_path, cropped_box)
+        print(f"Time taken to save the cropped box: {time.time() - start_time} seconds")
         wee_little_boxes_file_paths.append(output_path)
-        print()
         count += 1
+
 
 def crop_below_line(image_path, output_folder):
     global latest_screenshot
     # Load the image
+    begin_time = time.time()
     image = cv2.imread(image_path)
     if image is None:
         raise FileNotFoundError(f"Image file not found: {image_path}")
@@ -149,7 +174,10 @@ def crop_below_line(image_path, output_folder):
     # Save the cropped image, overwriting the latest_screenshot
     cv2.imwrite(image_path, cropped_image)
     latest_screenshot = image_path
+    end_time = time.time()
+    total_time = end_time - begin_time
     print(f"Cropped image saved to: {image_path}")
+    print(f"It took {total_time} seconds to crop imag")
 
 
 def resize_image(file_path, target_size):
@@ -160,21 +188,16 @@ def resize_image(file_path, target_size):
 
 def OCR_screenshot(file_paths):
     global latest_screenshot, wee_little_boxes_file_paths
-    
     for file_path in file_paths:
         try:
             resized_image = resize_image(file_path, (9000, 6000))  # Resize the image to 9000x6000 pixels
-            
             begin_time = time.time()
             text = pytesseract.image_to_string(resized_image, lang='eng')
             end_time = time.time()
             total_time = end_time - begin_time
-            
             print(f"OCR result for {file_path}: {text}")
             print(f"OCR Completed in {total_time:.5f} seconds")
-            
             # Optionally, do something with the OCR result
-            
         except Exception as e:
             print(f'An error occurred processing {file_path}: {e}')
 
