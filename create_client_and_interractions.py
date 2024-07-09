@@ -167,7 +167,7 @@ def resize_image(file_path, target_size):
     return resized_image
 
 def OCR_screenshot(file_paths):
-    global latest_screenshot
+    global latest_screenshot, wee_little_boxes_file_paths
     
     for file_path in file_paths:
         try:
@@ -289,7 +289,13 @@ def connect_and_type(x, y, message):
 
 def main():
     pass
-    #stop_adb_server() # This is for testing, to see how the script can handle the errors and restart the server.
+    stop_adb_server() # This is for testing, to see how the script can handle the errors and restart the server.
     #connect_and_type(500, 1800, "Quick fight")
-    #connect_and_screenshot()
-    #OCR_screenshot(latest_screenshot)
+    cropped_images_folder = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\Cropped Screenshots"
+    individual_messages_folder = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\Individual Messages"
+    connect_and_screenshot()
+    crop_below_line(latest_screenshot, cropped_images_folder)
+    find_and_crop_bubbles(latest_screenshot, individual_messages_folder)
+    OCR_screenshot(wee_little_boxes_file_paths)
+
+main()
