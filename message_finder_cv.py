@@ -34,6 +34,6 @@ def find_and_crop_bubbles(target_image_path, output_folder):
         count += 1
 # Usage
 downloads_folder = os.path.join(os.path.expanduser('~'), 'Downloads')
-target_image_path = r"C:\Users\paule\Desktop\Redmont-Client-main\Redmont Client Screenshots\cropped_screenshot_2024-03-30_17-07-50.png"  # Replace with the path to your target image file
+target_image_path = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\Screenshots for OCR\local_screenshot1720183159.9454582.png"  # Replace with the path to your target image file
 
 find_and_crop_bubbles(target_image_path, downloads_folder)
