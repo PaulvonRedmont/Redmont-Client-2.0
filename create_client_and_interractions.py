@@ -100,7 +100,6 @@ def ONLY_start_and_connect_to_server():
 def find_and_crop_bubbles(target_image_path, output_folder):
     # Load the target image
     global wee_little_boxes_file_paths, latest_screenshot
-    crop_below_line(latest_screenshot, )
     target_image = cv2.imread(target_image_path)
     if target_image is None:
         raise ValueError("Could not load the image. Please check the image path.")
@@ -112,11 +111,15 @@ def find_and_crop_bubbles(target_image_path, output_folder):
     edges = cv2.Canny(blurred_image, 50, 150)
     # Find contours in the edge-detected image
     contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    # Sort the contours based on the largest y-value to the smallest y-value
+    contours = sorted(contours, key=lambda cnt: cv2.boundingRect(cnt)[1])
     # Ensure the output folder exists
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
     count = 0
-    # Loop over the contours and save the bounding boxes
+    messages = ["latest message", "second message", "third message", "fourth message", "fifth message",
+                "sixth message", "seventh message", "eighth message", "ninth message", "tenth message"]
+    # Loop over the contours and save the bounding boxes with labels
     for contour in contours:
         # Get the bounding box for the contour
         x, y, w, h = cv2.boundingRect(contour)
@@ -125,14 +128,15 @@ def find_and_crop_bubbles(target_image_path, output_folder):
             continue
         # Crop the box from the image
         cropped_box = target_image[y:y+h, x:x+w]
-        # Save the cropped box
-        timestamp = time.time()
-        output_path = os.path.join(output_folder, f'cropped_box_{timestamp}.png')
+        # Save the cropped box with a labeled filename
+        label = messages[count % len(messages)]  # Select the appropriate label based on count
+        output_filename = f'cropped_box_{label}.png'
+        output_path = os.path.join(output_folder, output_filename)
         cv2.imwrite(output_path, cropped_box)
         
         count += 1
 
-def crop_below_line(image_path, output_path):
+def crop_below_line(image_path, output_folder):
     global latest_screenshot
     # Load the image
     image = cv2.imread(image_path)
@@ -144,10 +148,15 @@ def crop_below_line(image_path, output_path):
     y_crop = 1177
     # Crop the image
     cropped_image = image[0:y_crop, :]
+    # Generate a timestamp
+    timestamp = time.strftime("%Y%m%d%H%M%S")
+    # Construct the output filename with the timestamp
+    output_filename = f"cropped_{timestamp}.png"
+    # Determine the output path by joining the output folder and filename
+    output_path = os.path.join(output_folder, output_filename)
     # Save or display the cropped image
     cv2.imwrite(output_path, cropped_image)
     print(f"Cropped image saved to: {output_path}")
-
 
 def resize_image(file_path, target_size):
     global latest_screenshot
