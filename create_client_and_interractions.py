@@ -2,7 +2,10 @@ from ppadb.client import Client as AdbClient
 from PIL import Image
 import os, time, pytesseract
 from spellchecker import SpellChecker
- 
+import cv2
+
+wee_little_boxes_file_paths = []
+
 message_to_write = ''
 latest_screenshot = ''
 
@@ -92,6 +95,60 @@ def ONLY_start_and_connect_to_server():
         time_to_connect_to_server = 0
         time_to_kill_server = 0
 
+
+
+def find_and_crop_bubbles(target_image_path, output_folder):
+    # Load the target image
+    global wee_little_boxes_file_paths, latest_screenshot
+    crop_below_line(latest_screenshot, )
+    target_image = cv2.imread(target_image_path)
+    if target_image is None:
+        raise ValueError("Could not load the image. Please check the image path.")
+    # Convert the image to grayscale
+    gray_image = cv2.cvtColor(target_image, cv2.COLOR_BGR2GRAY)
+    # Apply GaussianBlur to reduce noise and improve edge detection
+    blurred_image = cv2.GaussianBlur(gray_image, (5, 5), 0)
+    # Apply Canny edge detection
+    edges = cv2.Canny(blurred_image, 50, 150)
+    # Find contours in the edge-detected image
+    contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    # Ensure the output folder exists
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+    count = 0
+    # Loop over the contours and save the bounding boxes
+    for contour in contours:
+        # Get the bounding box for the contour
+        x, y, w, h = cv2.boundingRect(contour)
+        # Optional: Filter out small contours that are likely not text bubbles
+        if w < 50 or h < 50:
+            continue
+        # Crop the box from the image
+        cropped_box = target_image[y:y+h, x:x+w]
+        # Save the cropped box
+        timestamp = time.time()
+        output_path = os.path.join(output_folder, f'cropped_box_{timestamp}.png')
+        cv2.imwrite(output_path, cropped_box)
+        
+        count += 1
+
+def crop_below_line(image_path, output_path):
+    global latest_screenshot
+    # Load the image
+    image = cv2.imread(image_path)
+    if image is None:
+        raise FileNotFoundError(f"Image file not found: {image_path}")
+    # Get image dimensions
+    height, width, channels = image.shape
+    # Define the y-coordinate to crop below
+    y_crop = 1177
+    # Crop the image
+    cropped_image = image[0:y_crop, :]
+    # Save or display the cropped image
+    cv2.imwrite(output_path, cropped_image)
+    print(f"Cropped image saved to: {output_path}")
+
+
 def resize_image(file_path, target_size):
     global latest_screenshot
     image = Image.open(file_path)
@@ -107,6 +164,8 @@ def OCR_screenshot(file_path):
     total_time = end_time - begin_time
     print(f"OCR result: {text}")
     print("OCR Completed in {:.5f} seconds".format(total_time))
+
+
 
 def connect_and_screenshot():
     global time_to_initialize_ADB_client, time_to_screenshot, time_to_copy_screenshot, latest_screenshot
@@ -179,7 +238,7 @@ def connect_and_tap(x, y):
 def connect_and_type(x, y, message):
 
     try:
-        start_adb_server()
+        #start_adb_server()
         client = AdbClient(host='127.0.0.1', port=5037)
         client.remote_connect(bluestacks_ip, bluestacks_port)
         devices = client.devices()
@@ -207,14 +266,9 @@ def connect_and_type(x, y, message):
 
 
 
-
-
-
-
 def main():
+    pass
     #stop_adb_server() # This is for testing, to see how the script can handle the errors and restart the server.
-    #connect_and_type(500, 120, "Quack")
-    connect_and_screenshot()
-    OCR_screenshot(latest_screenshot)
-
-main()
+    #connect_and_type(500, 1800, "Quick fight")
+    #connect_and_screenshot()
+    #OCR_screenshot(latest_screenshot)
