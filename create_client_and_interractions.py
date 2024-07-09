@@ -6,6 +6,9 @@ import cv2
 
 wee_little_boxes_file_paths = []
 
+ocr_text = []
+
+
 message_to_write = ''
 latest_screenshot = ''
 
@@ -24,6 +27,10 @@ total_time_for_total_operation = 0
 time_to_start_server = 0
 time_to_connect_to_server = 0
 time_to_kill_server = 0
+
+def append_text_to_file(filename, text):
+    with open(filename, 'a') as file:
+        file.write(text + '\n')
 
 def start_adb_server():
     global time_to_start_server
@@ -187,7 +194,7 @@ def resize_image(file_path, target_size):
     return resized_image
 
 def OCR_screenshot(file_paths):
-    global latest_screenshot, wee_little_boxes_file_paths
+    global latest_screenshot, wee_little_boxes_file_paths, ocr_text
     for file_path in file_paths:
         try:
             resized_image = resize_image(file_path, (9000, 6000))  # Resize the image to 9000x6000 pixels
@@ -197,7 +204,9 @@ def OCR_screenshot(file_paths):
             total_time = end_time - begin_time
             print(f"OCR result for {file_path}: {text}")
             print(f"OCR Completed in {total_time:.5f} seconds")
-            # Optionally, do something with the OCR result
+            text_file_to_write_to = r"C:\Users\paule\Desktop\Redmont-Client-main\Redmont-Client-main\OCR And Logs\message_logs.txt"
+            ocr_text.append(text)
+            append_text_to_file(text, text_file_to_write_to)
         except Exception as e:
             print(f'An error occurred processing {file_path}: {e}')
 
