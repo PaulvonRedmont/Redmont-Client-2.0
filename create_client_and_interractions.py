@@ -135,7 +135,7 @@ def find_and_crop_bubbles(target_image_path, output_folder):
         output_path = os.path.join(output_folder, output_filename)
         cv2.imwrite(output_path, cropped_box)
         wee_little_boxes_file_paths.append(output_path)
-
+        print()
         count += 1
 
 def crop_below_line(image_path, output_folder):
@@ -166,15 +166,25 @@ def resize_image(file_path, target_size):
     resized_image = image.resize(target_size, Image.BICUBIC)
     return resized_image
 
-def OCR_screenshot(file_path):
+def OCR_screenshot(file_paths):
     global latest_screenshot
-    resized_image = resize_image(file_path, (9000, 6000))  # Resize the image to 9000x6000 pixels
-    begin_time = time.time()
-    text = pytesseract.image_to_string(resized_image, lang='eng')
-    end_time = time.time()
-    total_time = end_time - begin_time
-    print(f"OCR result: {text}")
-    print("OCR Completed in {:.5f} seconds".format(total_time))
+    
+    for file_path in file_paths:
+        try:
+            resized_image = resize_image(file_path, (9000, 6000))  # Resize the image to 9000x6000 pixels
+            
+            begin_time = time.time()
+            text = pytesseract.image_to_string(resized_image, lang='eng')
+            end_time = time.time()
+            total_time = end_time - begin_time
+            
+            print(f"OCR result for {file_path}: {text}")
+            print(f"OCR Completed in {total_time:.5f} seconds")
+            
+            # Optionally, do something with the OCR result
+            
+        except Exception as e:
+            print(f'An error occurred processing {file_path}: {e}')
 
 
 
