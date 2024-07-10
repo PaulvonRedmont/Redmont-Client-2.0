@@ -108,7 +108,6 @@ def ONLY_start_and_connect_to_server():
 
 
 
-
 def find_and_crop_bubbles(target_image_path, output_folder):
     global wee_little_boxes_file_paths, latest_screenshot
     # Start the timer
@@ -118,34 +117,41 @@ def find_and_crop_bubbles(target_image_path, output_folder):
     if target_image is None:
         raise ValueError("Could not load the image. Please check the image path.")
     print(f"Time taken to load the image: {time.time() - start_time} seconds")
+
     # Convert the image to grayscale
     start_time = time.time()
     gray_image = cv2.cvtColor(target_image, cv2.COLOR_BGR2GRAY)
     print(f"Time taken to convert the image to grayscale: {time.time() - start_time} seconds")
+
     # Apply GaussianBlur to reduce noise and improve edge detection
     start_time = time.time()
     blurred_image = cv2.GaussianBlur(gray_image, (5, 5), 0)
     print(f"Time taken to apply GaussianBlur: {time.time() - start_time} seconds")
+
     # Apply Canny edge detection
     start_time = time.time()
     edges = cv2.Canny(blurred_image, 50, 150)
     print(f"Time taken to apply Canny edge detection: {time.time() - start_time} seconds")
+
     # Find contours in the edge-detected image
     start_time = time.time()
     contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     print(f"Time taken to find contours: {time.time() - start_time} seconds")
-    # Sort the contours based on the largest y-value to the smallest y-value
+
+    # Sort the contours based on the y-coordinate of the bounding box (from greatest to smallest y-coordinate)
     start_time = time.time()
-    contours = sorted(contours, key=lambda cnt: cv2.boundingRect(cnt)[1])
+    contours = sorted(contours, key=lambda cnt: cv2.boundingRect(cnt)[1], reverse=True)
     print(f"Time taken to sort contours: {time.time() - start_time} seconds")
+
     # Ensure the output folder exists
     start_time = time.time()
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
     print(f"Time taken to check and create output folder: {time.time() - start_time} seconds")
+
     count = 0
-    messages = ["latest message", "second message", "third message", "fourth message", "fifth message",
-                "sixth message", "seventh message", "eighth message", "ninth message", "tenth message"]
+    messages = ["001", "002", "003", "004", "005", "006", "007", "008", "009", "010", "011", "012"]
+
     # Loop over the contours and save the bounding boxes with labels
     for contour in contours:
         # Get the bounding box for the contour
@@ -153,10 +159,12 @@ def find_and_crop_bubbles(target_image_path, output_folder):
         # Optional: Filter out small contours that are likely not text bubbles
         if w < 50 or h < 50:
             continue
+
         # Crop the box from the image
         start_time = time.time()
         cropped_box = target_image[y:y+h, x:x+w]
         print(f"Time taken to crop the box from the image: {time.time() - start_time} seconds")
+
         # Save the cropped box with a labeled filename
         start_time = time.time()
         label = messages[count % len(messages)]  # Select the appropriate label based on count
@@ -167,6 +175,9 @@ def find_and_crop_bubbles(target_image_path, output_folder):
         print(f"Time taken to save the cropped box: {time.time() - start_time} seconds")
         wee_little_boxes_file_paths.append(output_path)
         count += 1
+
+    print("wee_little_boxes_file_paths:", wee_little_boxes_file_paths)
+    
 
 
 def crop_below_line(image_path, output_folder):
@@ -188,7 +199,7 @@ def crop_below_line(image_path, output_folder):
     # Get image dimensions
     height, width, channels = image.shape
     # Define the y-coordinate to crop below
-    y_crop = 1177
+    y_crop = 1636 # assuming you're not using any other type of bluestacks thingy
     # Crop the image
     cropped_image = image[0:y_crop, :]
     # Save the cropped image, overwriting the latest_screenshot
