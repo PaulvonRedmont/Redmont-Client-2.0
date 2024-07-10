@@ -3,6 +3,7 @@ from PIL import Image
 import os, time, pytesseract
 from spellchecker import SpellChecker
 import cv2
+import shutil
 
 wee_little_boxes_file_paths = []
 
@@ -159,7 +160,8 @@ def find_and_crop_bubbles(target_image_path, output_folder):
         # Save the cropped box with a labeled filename
         start_time = time.time()
         label = messages[count % len(messages)]  # Select the appropriate label based on count
-        output_filename = f'cropped_box_{time.time()}_{label}.png'
+        timestamp = time.time()
+        output_filename = f'cropped_box_{timestamp}_{label}.png'
         output_path = os.path.join(output_folder, output_filename)
         cv2.imwrite(output_path, cropped_box)
         print(f"Time taken to save the cropped box: {time.time() - start_time} seconds")
@@ -169,6 +171,16 @@ def find_and_crop_bubbles(target_image_path, output_folder):
 
 def crop_below_line(image_path, output_folder):
     global latest_screenshot
+    all_screenshots = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\All Screenshots"
+    screenshots_to_be_cropped = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\Screenshots to be cropped"
+    try:
+        shutil.copy(image_path, all_screenshots)
+        print("Copied image to main folder")
+        shutil.copy(image_path, screenshots_to_be_cropped)
+    
+        print("Copied image to cropping folder")
+    except Exception as e:
+        print(f"Error occurred while copying file: {e}")
     # Load the image
     begin_time = time.time()
     image = cv2.imread(image_path)
@@ -222,7 +234,7 @@ def connect_and_screenshot():
         client = AdbClient(host='127.0.0.1', port=5037)
         devices = client.devices()
         if not devices:
-            raise Exception('No devices/emulators found.')
+            raise Exception('No devices/emulators found. Perhaps ye need to (re)launch Bluestacks?')
         device = devices[0]
         end_time = time.time()
         time_to_initialize_ADB_client = end_time - start_time
@@ -230,7 +242,7 @@ def connect_and_screenshot():
         start_time = time.time()
         timestamp = time.time()
         remote_screenshot_path = '/sdcard/screenshot.png'
-        folder_path = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\Screenshots for OCR"
+        folder_path = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\Temporary Screenshots"
         local_screenshot_path = os.path.join(folder_path, f'local_screenshot{timestamp}.png')
         latest_screenshot = local_screenshot_path
         print(f"Latest screenshot: {latest_screenshot}")
@@ -315,7 +327,7 @@ def connect_and_type(x, y, message):
 
 def main():
     pass
-    stop_adb_server() # This is for testing, to see how the script can handle the errors and restart the server.
+    #stop_adb_server() # This is for testing, to see how the script can handle the errors and restart the server.
     #connect_and_type(500, 1800, "Quick fight")
     cropped_images_folder = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\Cropped Screenshots"
     individual_messages_folder = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\Individual Messages"
