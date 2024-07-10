@@ -172,12 +172,9 @@ def find_and_crop_bubbles(target_image_path, output_folder):
 def crop_below_line(image_path, output_folder):
     global latest_screenshot
     all_screenshots = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\All Screenshots"
-    screenshots_to_be_cropped = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\Screenshots to be cropped"
+    cropped_screenshots = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\Cropped Screenshots"
     try:
-        shutil.copy(image_path, all_screenshots)
-        print("Copied image to main folder")
-        shutil.copy(image_path, screenshots_to_be_cropped)
-    
+        shutil.copy(image_path, cropped_screenshots)
         print("Copied image to cropping folder")
     except Exception as e:
         print(f"Error occurred while copying file: {e}")
@@ -333,7 +330,7 @@ def main():
     individual_messages_folder = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\Individual Messages"
     connect_and_screenshot()
     crop_below_line(latest_screenshot, cropped_images_folder)
-    find_and_crop_bubbles(latest_screenshot, individual_messages_folder)
-    OCR_screenshot(wee_little_boxes_file_paths)
+    #find_and_crop_bubbles(latest_screenshot, individual_messages_folder)
+    #OCR_screenshot(wee_little_boxes_file_paths)
 
 main()
