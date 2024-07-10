@@ -239,7 +239,7 @@ def connect_and_screenshot():
         start_time = time.time()
         timestamp = time.time()
         remote_screenshot_path = '/sdcard/screenshot.png'
-        folder_path = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\Temporary Screenshots"
+        folder_path = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\All Screenshots"
         local_screenshot_path = os.path.join(folder_path, f'local_screenshot{timestamp}.png')
         latest_screenshot = local_screenshot_path
         print(f"Latest screenshot: {latest_screenshot}")
