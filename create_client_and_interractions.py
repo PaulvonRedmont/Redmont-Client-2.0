@@ -174,8 +174,10 @@ def crop_below_line(image_path, output_folder):
     all_screenshots = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\All Screenshots"
     cropped_screenshots = r"C:\Users\paule\Desktop\Redmont-Client-main\screenshots\Cropped Screenshots"
     try:
-        shutil.copy(image_path, cropped_screenshots)
-        print("Copied image to cropping folder")
+        new_file_path_of_image_to_crop = shutil.copy(image_path, cropped_screenshots)
+        print("Copied image to cropping folder")        
+        #last_part = os.path.basename(latest_screenshot)
+        #image_to_crop_path = os.path.join(cropped_screenshots, f'{last_part}')
     except Exception as e:
         print(f"Error occurred while copying file: {e}")
     # Load the image
