@@ -1,4 +1,6 @@
 # Redmont-Client-2.0
+![Designer (1)](https://github.com/PaulvonRedmont/Redmont-Client-2.0/assets/146851640/0474e9a0-24f7-495f-acb8-776b40ccf9ea)
+
 
 New and updated version of Redmont Client 1.0 (latest version using ADB Client and increased accuracy, as described [here](https://github.com/PaulvonRedmont/Redmont-Client-2.0/blob/main/progress%20logs.md#attempt-10-7324-going-back-to-bluestacks-with-adb-client-and-increased-ocr-accuracy))
 
