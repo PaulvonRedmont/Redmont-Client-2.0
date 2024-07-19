@@ -9,11 +9,11 @@ _Some notable changes:_
 - Now allows users to retain full functionality of their keyboard and mouse while the client is running (older versions used pyautogui as a sort of macro)
 - Has an 17% increased OCR accuracy rate by increasing image size when processing image
 
-# Many thanks to the hard work from:
+Many thanks to the hard work from:
 
-https://github.com/dimdenGD/chrome-lens-ocr
-https://github.com/tesseract-ocr/tesseract
-https://github.com/Swind/pure-python-adb
+- https://github.com/dimdenGD/chrome-lens-ocr
+- https://github.com/tesseract-ocr/tesseract
+- https://github.com/Swind/pure-python-adb
 
 # How to install:
 
