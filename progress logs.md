@@ -69,3 +69,11 @@ After a week of progress, I believe I have been able to successfully create a fu
 1. Built a function that will crop each message, increasing OCR accuracy drastically and allowing the client to respond to and reason with specific messages (allowing for the hard-coding of context to be a lot easier, not having to rely on parsing text blocks)
 2. Created a function that will log all messages received and sent
 3. Started drawing up the training architecture for a simple predictive AI model that will train in 10 million simulated games of Blackjack (estimated time of training: 2 days). This will allow the client to have better long-term reasoning and gold management, as well as avoid any suspicion of automation from the developers
+
+# Update 7/19/24: Google OCR API free and web UI
+
+After a bit of digging, I have found a lovely little JS library that could be of great use to the client's efficiency and accuracy when performing OCR. chrome-lens-ocr allows users to access the Google OCR API via Chrome's built-in Google Lenses, essentially giving one unlimited and free cloud access to Google's OCR API. The accuracy and speed on a single image consisting of around 200 words is astronomically greater than that of a locally run Tesseract model, taking only around 2.35 seconds to return text, and possessing a near-perfect accuracy. Furthermore, my benchmarking images were quite awful, grainy photos of pages of books, suggesting that for a perfectly uniform UI such as the Alexa App, the OCR accuracy would be even higher. 
+
+Additionally, I have decided to make a web UI for the client, although it will probably only be limited to paid versions of the client in the future. My plan is to make a crude HTML document that is a sort of wrapper/proxy for the underlying python, js and C applications running the client in the background.
+
+But I've got absoutely no idea how I'm going to make it look good and actually be useable, so I'm going to proabably recruit someone else from the Knight Manager community to help me out, or just have AI write it for me. Idk, I've never designed a UI this complext in HTML, so this is going to be interesting.
