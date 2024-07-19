@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloud Compute Management</title>
+    <title>Redmont Client 2.0</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
@@ -70,7 +70,7 @@
 <body>
 
 <div class="container">
-    <h1>Cloud Compute Management</h1>
+    <h1>Redmont Client 2.0</h1>
     
     <div class="stat">CPU Usage: <span id="cpu-usage"></span></div>
     <button id="toggleCpu">Toggle CPU Graph</button>
@@ -162,7 +162,7 @@
     }
 
     function updateGold() {
-        const goldChange = Math.floor(Math.random() * 50) - 25;
+        const goldChange = Math.floor(Math.random() * 100) - 25;
         const currentGold = goldChart.data.datasets[0].data[goldChart.data.datasets[0].data.length - 1] + goldChange;
         goldChart.data.datasets[0].data.shift();
         goldChart.data.datasets[0].data.push(Math.max(currentGold, 0));
