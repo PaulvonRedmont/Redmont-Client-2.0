@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Compute Management</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            margin: 0;
+            display: flex;
+        }
+        .container {
+            width: 60%;
+            padding: 20px;
+            background: rgba(44, 62, 80, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            margin: 20px;
+        }
+        .sidebar {
+            width: 30%;
+            padding: 20px;
+            background: rgba(44, 62, 80, 0.7);
+            border-radius: 10px;
+            margin: 20px;
+        }
+        .stat {
+            margin: 10px 0;
+            text-align: center;
+        }
+        #xp-meter, #win-loss-meter {
+            height: 20px;
+            background: #95a5a6;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+        #xp-fill, #win-loss-fill {
+            height: 100%;
+            background: #2ecc71;
+            transition: width 0.5s;
+        }
+        canvas {
+            margin: 10px 0;
+            display: none;
+            max-width: 100%;
+        }
+        button {
+            margin: 5px;
+            padding: 5px 10px;
+            background: #2980b9;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+        nav {
+            margin-bottom: 20px;
+        }
+        nav button {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Cloud Compute Management</h1>
+    
+    <div class="stat">CPU Usage: <span id="cpu-usage"></span></div>
+    <button id="toggleCpu">Toggle CPU Graph</button>
+    <canvas id="cpuChart" width="400" height="200"></canvas>
+
+    <div class="stat">Win/Loss Ratio</div>
+    <div id="win-loss-meter">
+        <div id="win-loss-fill" style="width: 70%;"></div>
+    </div>
+    
+    <div class="stat">XP to Next Level</div>
+    <div id="xp-meter">
+        <div id="xp-fill" style="width: 60%;"></div>
+    </div>
+    
+    <div class="stat">Gold Over Time</div>
+    <button id="toggleGold">Toggle Gold Graph</button>
+    <canvas id="goldChart" width="400" height="200"></canvas>
+</div>
+
+<div class="sidebar">
+    <nav>
+        <button onclick="showPage('advanced')">Advanced Settings</button>
+        <button onclick="showPage('macros')">Macros</button>
+        <button onclick="showPage('info')">General Info</button>
+    </nav>
+    <div id="page-content">Select a menu option to view content.</div>
+</div>
+
+<script>
+    // CPU Usage Chart
+    const cpuCtx = document.getElementById('cpuChart').getContext('2d');
+    const cpuChart = new Chart(cpuCtx, {
+        type: 'line',
+        data: {
+            labels: Array.from({length: 10}, (_, i) => i + 1),
+            datasets: [{
+                label: 'CPU Usage (%)',
+                data: Array(10).fill(0),
+                borderColor: 'rgba(255, 206, 86, 1)',
+                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                fill: true,
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+
+    // Gold Line Chart
+    const goldCtx = document.getElementById('goldChart').getContext('2d');
+    const goldChart = new Chart(goldCtx, {
+        type: 'line',
+        data: {
+            labels: Array.from({length: 10}, (_, i) => i + 1),
+            datasets: [{
+                label: 'Gold Amount',
+                data: Array(10).fill(250),
+                borderColor: 'rgba(41, 128, 185, 1)',
+                backgroundColor: 'rgba(41, 128, 185, 0.2)',
+                fill: true,
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Update CPU Usage from System
+    function updateCpuUsage() {
+        const cpuUsage = Math.floor(Math.random() * 100);
+        document.getElementById('cpu-usage').innerText = `${cpuUsage}%`;
+        cpuChart.data.datasets[0].data.shift();
+        cpuChart.data.datasets[0].data.push(cpuUsage);
+        cpuChart.update();
+    }
+
+    function updateGold() {
+        const goldChange = Math.floor(Math.random() * 50) - 25;
+        const currentGold = goldChart.data.datasets[0].data[goldChart.data.datasets[0].data.length - 1] + goldChange;
+        goldChart.data.datasets[0].data.shift();
+        goldChart.data.datasets[0].data.push(Math.max(currentGold, 0));
+        goldChart.update();
+    }
+
+    function updateXpMeter() {
+        const xpNeeded = 100;
+        const currentXp = Math.floor(Math.random() * xpNeeded);
+        const fillPercentage = (currentXp / xpNeeded) * 100;
+        document.getElementById('xp-fill').style.width = fillPercentage + '%';
+    }
+
+    function updateWinLossMeter() {
+        const wins = 7;
+        const losses = 3;
+        const total = wins + losses;
+        const fillPercentage = (wins / total) * 100;
+        document.getElementById('win-loss-fill').style.width = fillPercentage + '%';
+    }
+
+    setInterval(() => {
+        updateCpuUsage();
+        updateGold();
+        updateXpMeter();
+        updateWinLossMeter();
+    }, 1000);
+
+    // Toggle Graph Visibility
+    document.getElementById('toggleCpu').addEventListener('click', () => {
+        const cpuChartCanvas = document.getElementById('cpuChart');
+        cpuChartCanvas.style.display = cpuChartCanvas.style.display === 'none' ? 'block' : 'none';
+    });
+
+    document.getElementById('toggleGold').addEventListener('click', () => {
+        const goldChartCanvas = document.getElementById('goldChart');
+        goldChartCanvas.style.display = goldChartCanvas.style.display === 'none' ? 'block' : 'none';
+    });
+
+    function showPage(page) {
+        const content = document.getElementById('page-content');
+        if (page === 'advanced') {
+            content.innerHTML = '<h2>Advanced Settings</h2><p>Here you can adjust advanced settings.</p>';
+        } else if (page === 'macros') {
+            content.innerHTML = '<h2>Macros</h2><p>Define your macros here.</p>';
+        } else if (page === 'info') {
+            content.innerHTML = '<h2>General Info</h2><p>General information about the system.</p>';
+        }
+    }
+</script>
+
+</body>
+</html>
