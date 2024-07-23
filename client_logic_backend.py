@@ -4,7 +4,7 @@ blacksmith_response_1_1 = "you got it.Can you fit me in for an upgrade?Should I 
 blakcsmith_response_1_2 = "sure.Do you have time to enhance an item?Want me to empower your sword, armor, or quarters?"
 blacksmith_response_1_3 = "ok. Greetings Giovanni! Can I empower your sword, armor, or quarters?"
 
-
+backpack_main = "alright.In your backpack are 24 items of the following categories. Craft goods, Food, and Consumables.Which category do you want to choose?"
 
 # Client states
 yes = "yes"
@@ -13,5 +13,6 @@ blacksmith = "blacksmith"
 # create a dictionary for searching alexa's responses 
 
 cient_logic_dictionary = [
-    "blacksmith", blacksmith_response_1, blacksmith_response_1_1, blakcsmith_response_1_2, blacksmith_response_1_3
+    "blacksmith", blacksmith_response_1, blacksmith_response_1_1, blakcsmith_response_1_2, blacksmith_response_1_3,
+    "backpack", backpack_main
 ]
