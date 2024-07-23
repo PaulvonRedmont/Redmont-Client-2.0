@@ -25,3 +25,9 @@ Many thanks to the hard work from:
 6) pip install `pytesseract, pure-python-adb, pyspellchecker`
 7) Enable ADB on Bluestacks under Settings < Advanced and restart Bluestacks
 8) Run the script/executable (which I will include a download link to once I write up the logic, ML component and GUI)
+
+# NOTE
+
+This script is woefully incomplete, and I probably won't finish it until sometime in late August of 2024.
+
+Basically, don't try to actually use any of the files in here yet.
